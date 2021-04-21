@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Echo</title>
+    <style>
+      body {
+        padding: 20px;
+      }
+      input, textarea {
+        display: block;
+        margin-bottom: 10px;
+      }
+      textarea {
+        height: 100px;
+      }
+      main {
+        display: flex;
+      }
+      form {
+        width: fit-content;
+      }
+      section {
+        width: fit-content;
+        padding-left: 50px;
+      }
+      .post {
+        padding: 12px 0;
+        border-collapse: collapse;
+        border-top: dotted thin #ccc;
+        border-bottom: dotted thin #ccc;
+      }
+      time {
+        color: #666;
+      }
+      span {
+        margin-left: 5px;
+      }
+      .name {
+        font-weight: bold;
+      }
+      audio {
+        display: block;
+        margin: 7.5px 0;
+      }
+      a {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Echo</h1>
+    <main>
+      <form action="/post" method="POST">
+        <h3>Create new post</h3>
+        <input name="creatorName" placeholder="Screen Name" required />
+        <input name="creatorEmail" type="email" placeholder="Email Address" required />
+        <textarea name="text" placeholder="Text" maxlength="160" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+      <section>
+        <h3>Posts:</h3>
+        <% posts.forEach(({ id, audioUrl, creatorName, createdAt, votes }) => { %>
+          <div class="post">
+            <span class="name">@<%=creatorName%></span> <time>at <%=createdAt%></time>
+            <audio preload="none" src="<%=audioUrl%>" controls></audio>
+            <span>Votes: <%=votes%></span>
+            <a href="/vote?id=<%=id%>&n=1">Upvote</a>
+            <a href="/vote?id=<%=id%>&n=-1">Downvote</a>
+          </div>
+        <% }) %>
+      </section>
+    </main>
+  </body>
+</html>
